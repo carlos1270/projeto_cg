@@ -1,4 +1,4 @@
-from src import Obj3D
+from src import Obj3D, AuxCam
 from OpenGL.GL import *
 from OpenGL.GL.shaders import compileProgram, compileShader
 import pyrr
@@ -63,6 +63,15 @@ glfw.set_window_pos(janela, 400, 200)
 # Setando a função que reajusta o tamanho da janela
 glfw.set_window_size_callback(janela, reajustando_janela)
 
+# Setando a função de posição do mouse
+glfw.set_cursor_pos_callback(janela, AuxCam.mouse_look_clb)
+
+# Setando a função de ativação da teclas
+glfw.set_key_callback(janela, AuxCam.key_input_clb)
+
+# Capturando o cursor do mouse
+glfw.set_input_mode(janela, glfw.CURSOR, glfw.CURSOR_DISABLED)
+
 # Construindo o contexto atual
 glfw.make_context_current(janela)
 
@@ -96,12 +105,14 @@ scale = pyrr.Matrix44.from_scale(pyrr.Vector3([0.1, 0.1, 0.1]))
 # Main loop da aplicação
 while not glfw.window_should_close(janela):
     glfw.poll_events()
+    AuxCam.do_movement()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time())
-    multi = pyrr.matrix44.multiply(scale, rot_y)
-    model = pyrr.matrix44.multiply(multi, posicao_arvore)
+    view = AuxCam.cam.get_janela_visualizacao()
+    glUniformMatrix4fv(localizacao_visualizacao, 1, GL_FALSE, view)
+
+    model = pyrr.matrix44.multiply(scale, posicao_arvore)
 
     Obj3D.exibir_objeto(localizacao_modelo, vao_arvore, textura_arvore, indices_arvore, model, modo_exibicao=GL_POLYGON)
 
