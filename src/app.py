@@ -115,9 +115,9 @@ class App:
             glfw.swap_buffers(self.janela)
         #finaliza  janela
         glfw.terminate()
-
+        
     # glfw callback função
-    def reajustando_janela(self, window, largura, altura, localizacao_projecao):
+    def reajustando_janela(self, window, largura, altura):
         glViewport(0, 0, largura, altura)
         projecao = pyrr.matrix44.create_perspective_projection_matrix(45, largura / altura, 0.1, 100)
-        glUniformMatrix4fv(localizacao_projecao, 1, GL_FALSE, projecao)
+        glUniformMatrix4fv(self.localizacao_projecao, 1, GL_FALSE, projecao)
