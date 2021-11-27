@@ -158,9 +158,9 @@ glUniformMatrix4fv(localizacao_visualizacao, 1, GL_FALSE, visualizacao)
 
 vao_macaco, vbo_macaco, textura_macaco, indices_macaco, posicao_macaco = carregar_objeto("samples/objetos/macaco/monkey.obj", "samples/objetos/macaco/monkey.jpg", [-4, 0, 0])
 vao_chibi, vbo_chibi, textura_chibi, indices_chibe, posicao_chibe = carregar_objeto("samples/objetos/chibi/chibi.obj", "samples/objetos/chibi/chibi.png", [0, -5, -10])
-vao_cube, vbo_cube, textura_cube, indices_cube, posicao_cube = carregar_objeto("samples/objetos/cube/cube.obj", "samples/objetos/cube/cube.jpg", [0, 0, 0])
+vao_cube, vbo_cube, textura_cube, indices_cube, posicao_cube = carregar_objeto("samples/objetos/cube/cube.obj", "samples/objetos/cube/cube_sky.jpg", [0, 0, 0])
 
-scale = pyrr.Matrix44.from_scale(pyrr.Vector3([30, 30, 30]))
+scale = pyrr.Matrix44.from_scale(pyrr.Vector3([50, 50, 50]))
 
 # Main loop da aplicação
 while not glfw.window_should_close(janela):
