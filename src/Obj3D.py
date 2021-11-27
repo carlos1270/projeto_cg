@@ -22,11 +22,11 @@ def carregando_textura(caminho, textura, tipo_mapeamento=GL_DECAL):
     
     return textura
 
-def exibir_objeto(localizacao_do_modelo, vao, textura, indices, posicao_obj, modo_exibicao=GL_TRIANGLES):
+def exibir_objeto(localizacao_do_modelo, vao, textura, indices, posicao_obj):
     glBindVertexArray(vao)
     glBindTexture(GL_TEXTURE_2D, textura)
     glUniformMatrix4fv(localizacao_do_modelo, 1, GL_FALSE, posicao_obj)
-    glDrawArrays(GL_QUADS, 0, len(indices))
+    glDrawArrays(GL_TRIANGLES, 0, len(indices))
 
 def alocar_buffers(buffer):
     # Alocando buffers
