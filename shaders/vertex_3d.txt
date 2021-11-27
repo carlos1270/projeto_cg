@@ -1,0 +1,17 @@
+# version 330
+
+layout(location = 0) in vec3 a_posicao;
+layout(location = 1) in vec2 a_textura;
+layout(location = 2) in vec3 a_normal;
+
+uniform mat4 modelo;
+uniform mat4 projecao;
+uniform mat4 visualizacao;
+
+out vec2 v_texture;
+
+void main()
+{
+    gl_Position = projecao * visualizacao * modelo * vec4(a_posicao, 1.0);
+    v_texture = a_textura;
+}
