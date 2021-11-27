@@ -144,7 +144,7 @@ glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 # Definindo a projeção como perspectiva de acordo com o tamanho da janela
-projecao = pyrr.matrix44.create_perspective_projection_matrix(45, 1280 / 720, 0.1, 100)
+projecao = pyrr.matrix44.create_perspective_projection_matrix(5000, 1280 / 720, 0.1, 10000)
 
 # Definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
 visualizacao = pyrr.matrix44.create_look_at(pyrr.Vector3([0, 0, 8]), pyrr.Vector3([0, 0, 0]), pyrr.Vector3([0, 1, 0]))
@@ -158,6 +158,9 @@ glUniformMatrix4fv(localizacao_visualizacao, 1, GL_FALSE, visualizacao)
 
 vao_macaco, vbo_macaco, textura_macaco, indices_macaco, posicao_macaco = carregar_objeto("samples/objetos/macaco/monkey.obj", "samples/objetos/macaco/monkey.jpg", [-4, 0, 0])
 vao_chibi, vbo_chibi, textura_chibi, indices_chibe, posicao_chibe = carregar_objeto("samples/objetos/chibi/chibi.obj", "samples/objetos/chibi/chibi.png", [0, -5, -10])
+vao_cube, vbo_cube, textura_cube, indices_cube, posicao_cube = carregar_objeto("samples/objetos/cube/cube.obj", "samples/objetos/cube/cube.jpg", [0, 0, 0])
+
+scale = pyrr.Matrix44.from_scale(pyrr.Vector3([30, 30, 30]))
 
 # Main loop da aplicação
 while not glfw.window_should_close(janela):
@@ -172,6 +175,9 @@ while not glfw.window_should_close(janela):
     exibir_objeto(localizacao_modelo, vao_macaco, textura_macaco, indices_macaco, posicao_macaco)
 
     exibir_objeto(localizacao_modelo, vao_chibi, textura_chibi, indices_chibe, posicao_chibe)
+
+    posicao_cube_scale = pyrr.matrix44.multiply(scale, posicao_cube)
+    exibir_objeto(localizacao_modelo, vao_cube, textura_cube, indices_cube, posicao_cube_scale)
 
     glfw.swap_buffers(janela)
 
