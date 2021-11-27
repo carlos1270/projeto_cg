@@ -66,16 +66,14 @@ class App:
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
         # Definindo a projeção como perspectiva de acordo com o tamanho da janela
-        projecao = pyrr.matrix44.create_perspective_projection_matrix(45, width / height, 0.1, 400)
+        projecao = pyrr.matrix44.create_perspective_projection_matrix(45, width / height, 0.1, 600)
 
-        self.vao_arvore, self.vbo_arvore, self.textura_arvore, self.indices_arvore, self.posicao_arvore = Obj3D.carregar_objeto("objetos/grama lowpoly/grass.obj", "objetos/grama lowpoly/depositphotos_79228002-stock-illustration-shades-of-green-abstract-polygonal.jpg", [0, 0, 0])
-        self.skyBox, shader3DCubemap = skybox.carregar_objeto("objetos/ground/sky")
+        #self.skyBox, shader3DCubemap = skybox.carregar_objeto("objetos/ground/sky")
+        self.vao_cube, self.vbo_cube, self.textura_cube, self.indices_cube, self.posicao_cube = Obj3D.carregar_objeto("objetos/cube/cube.obj", "objetos/cube/cube_sky.jpg", [0, 0, 0])
+        
+        self.vao_cenario, self.vbo_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario = Obj3D.carregar_objeto("objetos/cenario/cenario.obj", "objetos/cenario/cenario.png", [0, 0, 0])
 
-        glUseProgram(shader3DCubemap)
-        glUniformMatrix4fv(glGetUniformLocation(shader3DCubemap,"projecao"),1,GL_FALSE,projecao)
-        glUniform1i(glGetUniformLocation(shader3DCubemap, "skyBox"), 0)
-
-        self.scale = pyrr.Matrix44.from_scale(pyrr.Vector3([0.1, 0.1, 0.1]))
+        self.scale = pyrr.Matrix44.from_scale(pyrr.Vector3([200, 200, 200]))
 
         # Definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
         visualizacao = pyrr.matrix44.create_look_at(pyrr.Vector3([0, 0, -85]), pyrr.Vector3([0, 0, 0]), pyrr.Vector3([0, 1, 0]))
@@ -98,19 +96,18 @@ class App:
             self.nav.do_movement()
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-            glEnable(GL_DEPTH_TEST)
-            glDisable(GL_CULL_FACE)
-            self.skyBox.draw(np.array([0,0,1.2],dtype=np.float32))
-            glEnable(GL_CULL_FACE)
 
             view = self.cam.get_view_matrix()
             glUniformMatrix4fv(self.localizacao_visualizacao, 1, GL_FALSE, view)
 
             rot_y = pyrr.Matrix44.from_y_rotation(0.8 * glfw.get_time())
             multi = pyrr.matrix44.multiply(self.scale, rot_y)
-            model = pyrr.matrix44.multiply(rot_y, self.posicao_arvore)
 
-            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_arvore, self.textura_arvore, self.indices_arvore, self.posicao_arvore)
+            posicao_cube_scale = pyrr.matrix44.multiply(self.scale, self.posicao_cube)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cube, self.textura_cube, self.indices_cube, posicao_cube_scale, GL_TRIANGLES)
+
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario, GL_TRIANGLES)
+
 
             glfw.swap_buffers(self.janela)
         #finaliza  janela
