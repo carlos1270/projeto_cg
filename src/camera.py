@@ -3,7 +3,7 @@ from math import sin, cos, radians
 
 class Camera:
     def __init__(self):
-        self.camera_pos = Vector3([0.0, 0.0, 0.8])
+        self.camera_pos = Vector3([0.0, 0.0, 0.0])
         self.camera_front = Vector3([0.0, 0.0, -1.0])
         self.camera_up = Vector3([0.0, 1.0, 0.0])
         self.camera_right = Vector3([1.0, 0.0, 0.0])
@@ -43,13 +43,13 @@ class Camera:
     # Camera method for the WASD movement
     def process_keyboard(self, direction, velocity):
         if direction == "FORWARD":
-            self.camera_pos += self.camera_front * velocity
+            self.camera_pos += self.camera_front * (velocity*2)
         if direction == "BACKWARD":
-            self.camera_pos -= self.camera_front * velocity
+            self.camera_pos -= self.camera_front * (velocity*2)
         if direction == "LEFT":
-            self.camera_pos -= self.camera_right * velocity
+            self.camera_pos -= self.camera_right * (velocity*2)
         if direction == "RIGHT":
-            self.camera_pos += self.camera_right * velocity
+            self.camera_pos += self.camera_right * (velocity*2)
 
 
 

@@ -42,7 +42,7 @@ class App:
 
         #fazer o conteudo ser o da janela 
         # Setando a função que reajusta o tamanho da janela
-        glfw.set_window_size_callback(self.janela, self.reajustando_janela)
+        #glfw.set_window_size_callback(self.janela, self.reajustando_janela)
 
         # set the mouse position callback
         glfw.set_cursor_pos_callback(self.janela, self.nav.mouse_look_clb)
@@ -72,8 +72,17 @@ class App:
         self.vao_cube, self.vbo_cube, self.textura_cube, self.indices_cube, self.posicao_cube = Obj3D.carregar_objeto("objetos/cube/cube.obj", "objetos/cube/cube_sky.jpg", [0, 0, 0])
         
         self.vao_cenario, self.vbo_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario = Obj3D.carregar_objeto("objetos/cenario/cenario.obj", "objetos/cenario/cenario.png", [0, 0, 0])
+        self.vao_elefante, self.vbo_elefante, self.textura_elefante, self.indices_elefante, self.posicao_elefante = Obj3D.carregar_objeto("objetos/elefante/elefante.obj", "objetos/elefante/elefante.png", [0, -30, 0])
+        self.vao_avestruz, self.vbo_avestruz, self.textura_avestruz, self.indices_avestruz, self.posicao_avestruz = Obj3D.carregar_objeto("objetos/avestruz/avestruz.obj", "objetos/girafa/Textures.png", [0, -30, 0])
+        self.vao_rino, self.vbo_rino, self.textura_rino, self.indices_rino, self.posicao_rino = Obj3D.carregar_objeto("objetos/rino/rino.obj", "objetos/girafa/Textures.png", [0, -30, 10])
+        self.vao_veado, self.vbo_veado, self.textura_veado, self.indices_veado, self.posicao_veado = Obj3D.carregar_objeto("objetos/veado/veado.obj", "objetos/girafa/Textures.png", [10, -30, 0])
+        self.vao_panda, self.vbo_panda, self.textura_panda, self.indices_panda, self.posicao_panda = Obj3D.carregar_objeto("objetos/panda/panda.obj", "objetos/panda/panda.png", [10, -30, 10])
+        self.vao_tigre, self.vbo_tigre, self.textura_tigre, self.indices_tigre, self.posicao_tigre = Obj3D.carregar_objeto("objetos/tigre/tigre.obj", "objetos/tigre/tigercolor.png", [0, -30, 0])
+        self.vao_girafa, self.vbo_girafa, self.textura_girafa, self.indices_girafa, self.posicao_girafa = Obj3D.carregar_objeto("objetos/girafa/girafa.obj", "objetos/girafa/Textures.png", [20, -30, 0])
+
 
         self.scale = pyrr.Matrix44.from_scale(pyrr.Vector3([200, 200, 200]))
+        
 
         # Definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
         visualizacao = pyrr.matrix44.create_look_at(pyrr.Vector3([0, 0, -85]), pyrr.Vector3([0, 0, 0]), pyrr.Vector3([0, 1, 0]))
@@ -101,10 +110,23 @@ class App:
             glUniformMatrix4fv(self.localizacao_visualizacao, 1, GL_FALSE, view)
 
             posicao_cube_scale = pyrr.matrix44.multiply(self.scale, self.posicao_cube)
-            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cube, self.textura_cube, self.indices_cube, posicao_cube_scale, GL_TRIANGLES)
+            posicao_avestruz_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_avestruz)
+            posicao_rino_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_rino)
+            posicao_veado_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_veado)
+            posicao_panda_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.5, 0.5, 0.5])), self.posicao_panda)
+            posicao_tigre_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([2.0, 2.0, 2.0])), self.posicao_tigre)
+            posicao_girafa_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_girafa)
 
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cube, self.textura_cube, self.indices_cube, posicao_cube_scale, GL_TRIANGLES)
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario, GL_TRIANGLES)
 
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_elefante, self.textura_elefante, self.indices_elefante, self.posicao_elefante, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_avestruz, self.textura_avestruz, self.indices_avestruz, posicao_avestruz_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_rino, self.textura_rino, self.indices_rino, posicao_rino_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_veado, self.textura_veado, self.indices_veado, posicao_veado_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_panda, self.textura_panda, self.indices_panda, posicao_panda_scale, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_tigre, self.textura_tigre, self.indices_tigre, posicao_tigre_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_girafa, self.textura_girafa, self.indices_girafa, posicao_girafa_scale, GL_TRIANGLES)
 
             glfw.swap_buffers(self.janela)
         #finaliza  janela
