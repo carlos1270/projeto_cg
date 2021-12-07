@@ -73,13 +73,34 @@ class App:
         
         # Carregando cenario e animais 
         self.vao_cenario, self.vbo_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario = Obj3D.carregar_objeto("objetos/cenario/cenario.obj", "objetos/cenario/cenario.png", [0, 0, 0])
+        
+        #elefante
         self.vao_elefante, self.vbo_elefante, self.textura_elefante, self.indices_elefante, self.posicao_elefante = Obj3D.carregar_objeto("objetos/elefante/elefante.obj", "objetos/elefante/elefante.png", [-55, -28.5, 4])
+        self.vao_elefante_cerca, self.vbo_elefante_cerca, self.textura_elefante_cerca, self.indices_elefante_cerca, self.posicao_elefante_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [-49.3, -28.5, -3])
+
+        #avestruz
         self.vao_avestruz, self.vbo_avestruz, self.textura_avestruz, self.indices_avestruz, self.posicao_avestruz = Obj3D.carregar_objeto("objetos/avestruz/avestruz.obj", "objetos/girafa/Textures.png", [-46, -24.2, 109])
-        self.vao_rino, self.vbo_rino, self.textura_rino, self.indices_rino, self.posicao_rino = Obj3D.carregar_objeto("objetos/rino/rino.obj", "objetos/girafa/Textures.png", [0, -26, 84])
+        self.vao_avestruz_cerca, self.vbo_avestruz_cerca, self.textura_avestruz_cerca, self.indices_avestruz_cerca, self.posicao_avestruz_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [-43, -28.2, 101])
+
+        #veado
         self.vao_veado, self.vbo_veado, self.textura_veado, self.indices_veado, self.posicao_veado = Obj3D.carregar_objeto("objetos/veado/veado.obj", "objetos/girafa/Textures.png", [-98, -29.44, 5])
+        self.vao_veado_cerca, self.vbo_veado_cerca, self.textura_veado_cerca, self.indices_veado_cerca, self.posicao_veado_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [-88, -29.44, -3])
+
+        #rino
+        self.vao_rino, self.vbo_rino, self.textura_rino, self.indices_rino, self.posicao_rino = Obj3D.carregar_objeto("objetos/rino/rino.obj", "objetos/girafa/Textures.png", [0, -26, 84])
+        self.vao_rino_cerca, self.vbo_rino_cerca, self.textura_rino_cerca, self.indices_rino_cerca, self.posicao_rino_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [20, -28.2, 84])
+
+        #panda
         self.vao_panda, self.vbo_panda, self.textura_panda, self.indices_panda, self.posicao_panda = Obj3D.carregar_objeto("objetos/panda/panda.obj", "objetos/panda/panda.png", [6, -23, -11])
+        self.vao_panda_cerca, self.vbo_panda_cerca, self.textura_panda_cerca, self.indices_panda_cerca, self.posicao_panda_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [27, -29.2, -25])
+
+        #tigre
         self.vao_tigre, self.vbo_tigre, self.textura_tigre, self.indices_tigre, self.posicao_tigre = Obj3D.carregar_objeto("objetos/tigre/tigre.obj", "objetos/tigre/tigercolor.png", [-12, -28.2, 150])
+        self.vao_tigre_cerca, self.vbo_tigre_cerca, self.textura_tigre_cerca, self.indices_tigre_cerca, self.posicao_tigre_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [-5, -28.2, 150])
+
+        #girafa
         self.vao_girafa, self.vbo_girafa, self.textura_girafa, self.indices_girafa, self.posicao_girafa = Obj3D.carregar_objeto("objetos/girafa/girafa.obj", "objetos/girafa/Textures.png", [70, -29, 72])
+        self.vao_girafa_cerca, self.vbo_girafa_cerca, self.textura_girafa_cerca, self.indices_girafa_cerca, self.posicao_girafa_cerca = Obj3D.carregar_objeto("objetos/cerca/cerca.obj", "objetos/cerca/cerca.png", [85, -28.2, 52])
 
         # Carregando placas dos animais
         self.vao_p_elefante, self.vbo_p_elefante, self.textura_p_elefante, self.indices_p_elefante, self.posicao_p_elefante = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-elefante.png", [-37, -29, -2])
@@ -128,23 +149,65 @@ class App:
             glUniformMatrix4fv(self.localizacao_visualizacao, 1, GL_FALSE, view)
 
             posicao_cube_scale = pyrr.matrix44.multiply(self.scale, self.posicao_cube)
+
+            #avestruz
             posicao_avestruz_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_avestruz)
-            posicao_rino_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_rino)
+            posicao_avestruz_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([1.0, 2.0, 1.0])), self.posicao_avestruz_cerca)
+
+            #veado
             posicao_veado_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_veado)
+            posicao_veado_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([1.0, 1.0, 1.0])), self.posicao_veado_cerca)
+
+            #elefante
+            posicao_elefante_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([1.0, 2.0, 1.0])), self.posicao_elefante_cerca)
+
+            #rino
+            posicao_rino_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_rino)
+            posicao_rino_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([2.0, 2.0, 2.0])), self.posicao_rino_cerca)
+
+            #panda
             posicao_panda_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.5, 0.5, 0.5])), self.posicao_panda)
+            posicao_panda_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([2.0, 2.0, 2.0])), self.posicao_panda_cerca)
+
+            #tigre
             posicao_tigre_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([2.0, 2.0, 2.0])), self.posicao_tigre)
+
+            #girafa
             posicao_girafa_scale = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([0.25, 0.25, 0.25])), self.posicao_girafa)
+            posicao_girafa_cerca = pyrr.matrix44.multiply(pyrr.Matrix44.from_scale(pyrr.Vector3([2.0, 2.0, 2.0])), self.posicao_girafa_cerca)
 
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cube, self.textura_cube, self.indices_cube, posicao_cube_scale, GL_TRIANGLES)
+            
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario, GL_TRIANGLES)
 
+            #elefante
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_elefante, self.textura_elefante, self.indices_elefante, self.posicao_elefante, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_elefante_cerca, self.textura_elefante_cerca, self.indices_elefante_cerca, posicao_elefante_cerca, GL_QUADS)
+
+            #avestruz
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_avestruz, self.textura_avestruz, self.indices_avestruz, posicao_avestruz_scale, GL_TRIANGLES)
-            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_rino, self.textura_rino, self.indices_rino, posicao_rino_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_avestruz_cerca, self.textura_avestruz_cerca, self.indices_avestruz_cerca, posicao_avestruz_cerca, GL_QUADS)
+
+            #veado
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_veado, self.textura_veado, self.indices_veado, posicao_veado_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_veado_cerca, self.textura_veado_cerca, self.indices_veado_cerca, posicao_veado_cerca, GL_QUADS)
+
+            #rino
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_rino, self.textura_rino, self.indices_rino, posicao_rino_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_rino_cerca, self.textura_rino_cerca, self.indices_rino_cerca, posicao_rino_cerca, GL_QUADS)
+
+            
+            #panda
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_panda, self.textura_panda, self.indices_panda, posicao_panda_scale, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_panda_cerca, self.textura_panda_cerca, self.indices_panda_cerca, posicao_panda_cerca, GL_QUADS)
+
+            #tigre
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_tigre, self.textura_tigre, self.indices_tigre, posicao_tigre_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_tigre_cerca, self.textura_tigre_cerca, self.indices_tigre_cerca, self.posicao_tigre_cerca, GL_QUADS)
+
+            #girafa
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_girafa, self.textura_girafa, self.indices_girafa, posicao_girafa_scale, GL_TRIANGLES)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_girafa_cerca, self.textura_girafa_cerca, self.indices_girafa_cerca, posicao_girafa_cerca, GL_QUADS)
 
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_elefante, self.textura_p_elefante, self.indices_p_elefante, self.posicao_p_elefante, GL_QUADS)
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_avestruz, self.textura_p_avestruz, self.indices_p_avestruz, self.posicao_p_avestruz, GL_QUADS)
