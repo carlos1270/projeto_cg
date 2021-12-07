@@ -71,6 +71,7 @@ class App:
         #self.skyBox, shader3DCubemap = skybox.carregar_objeto("objetos/ground/sky")
         self.vao_cube, self.vbo_cube, self.textura_cube, self.indices_cube, self.posicao_cube = Obj3D.carregar_objeto("objetos/cube/cube.obj", "objetos/cube/cube_sky.jpg", [0, 0, 0])
         
+        # Carregando cenario e animais 
         self.vao_cenario, self.vbo_cenario, self.textura_cenario, self.indices_cenario, self.posicao_cenario = Obj3D.carregar_objeto("objetos/cenario/cenario.obj", "objetos/cenario/cenario.png", [0, 0, 0])
         self.vao_elefante, self.vbo_elefante, self.textura_elefante, self.indices_elefante, self.posicao_elefante = Obj3D.carregar_objeto("objetos/elefante/elefante.obj", "objetos/elefante/elefante.png", [-55, -28.5, 4])
         self.vao_avestruz, self.vbo_avestruz, self.textura_avestruz, self.indices_avestruz, self.posicao_avestruz = Obj3D.carregar_objeto("objetos/avestruz/avestruz.obj", "objetos/girafa/Textures.png", [-46, -24.2, 109])
@@ -80,10 +81,27 @@ class App:
         self.vao_tigre, self.vbo_tigre, self.textura_tigre, self.indices_tigre, self.posicao_tigre = Obj3D.carregar_objeto("objetos/tigre/tigre.obj", "objetos/tigre/tigercolor.png", [-12, -28.2, 150])
         self.vao_girafa, self.vbo_girafa, self.textura_girafa, self.indices_girafa, self.posicao_girafa = Obj3D.carregar_objeto("objetos/girafa/girafa.obj", "objetos/girafa/Textures.png", [70, -29, 72])
 
+        # Carregando placas dos animais
+        self.vao_p_elefante, self.vbo_p_elefante, self.textura_p_elefante, self.indices_p_elefante, self.posicao_p_elefante = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-elefante.png", [-37, -29, -2])
+        self.vao_p_avestruz, self.vbo_p_avestruz, self.textura_p_avestruz, self.indices_p_avestruz, self.posicao_p_avestruz = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-avestruz.png", [-35, -28.8, 109])
+        self.vao_p_rino, self.vbo_p_rino, self.textura_p_rino, self.indices_p_rino, self.posicao_p_rino = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-rinoceronte.png", [0, -29.5, 61])
+        self.vao_p_veado, self.vbo_p_veado, self.textura_p_veado, self.indices_p_veado, self.posicao_p_veado = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-veado.png", [-80, -29, 5])
+        self.vao_p_panda, self.vbo_p_panda, self.textura_p_panda, self.indices_p_panda, self.posicao_p_panda = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-panda.png", [0, -28.8, 50])
+        self.vao_p_tigre, self.vbo_p_tigre, self.textura_p_tigre, self.indices_p_tigre, self.posicao_p_tigre = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-tigre.png", [-10, -28.9, 140])
+        self.vao_p_girafa, self.vbo_p_girafa, self.textura_p_girafa, self.indices_p_girafa, self.posicao_p_girafa = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-girafa.png", [48, -29, 72])
+
+        #Girando placas
+        rot_y = pyrr.Matrix44.from_y_rotation(1.4)
+        self.posicao_p_elefante = pyrr.matrix44.multiply(rot_y, self.posicao_p_elefante)
+        self.posicao_p_avestruz = pyrr.matrix44.multiply(rot_y, self.posicao_p_avestruz)
+        self.posicao_p_veado = pyrr.matrix44.multiply(rot_y, self.posicao_p_veado)
+        rot_y = pyrr.Matrix44.from_y_rotation(3.4)
+        self.posicao_p_panda = pyrr.matrix44.multiply(rot_y, self.posicao_p_panda)
+        rot_y = pyrr.Matrix44.from_y_rotation(-1.8)
+        self.posicao_p_girafa = pyrr.matrix44.multiply(rot_y, self.posicao_p_girafa)
 
         self.scale = pyrr.Matrix44.from_scale(pyrr.Vector3([200, 200, 200]))
         
-
         # Definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
         visualizacao = pyrr.matrix44.create_look_at(pyrr.Vector3([0, 0, -85]), pyrr.Vector3([0, 0, 0]), pyrr.Vector3([0, 1, 0]))
 
@@ -127,6 +145,14 @@ class App:
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_panda, self.textura_panda, self.indices_panda, posicao_panda_scale, GL_QUADS)
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_tigre, self.textura_tigre, self.indices_tigre, posicao_tigre_scale, GL_TRIANGLES)
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_girafa, self.textura_girafa, self.indices_girafa, posicao_girafa_scale, GL_TRIANGLES)
+
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_elefante, self.textura_p_elefante, self.indices_p_elefante, self.posicao_p_elefante, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_avestruz, self.textura_p_avestruz, self.indices_p_avestruz, self.posicao_p_avestruz, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_rino, self.textura_p_rino, self.indices_p_rino, self.posicao_p_rino, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_veado, self.textura_p_veado, self.indices_p_veado, self.posicao_p_veado, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_panda, self.textura_p_panda, self.indices_p_panda, self.posicao_p_panda, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_tigre, self.textura_p_tigre, self.indices_p_tigre, self.posicao_p_tigre, GL_QUADS)
+            Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_girafa, self.textura_p_girafa, self.indices_p_girafa, self.posicao_p_girafa, GL_QUADS)
 
             glfw.swap_buffers(self.janela)
         #finaliza  janela
