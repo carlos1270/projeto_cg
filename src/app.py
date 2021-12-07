@@ -109,7 +109,7 @@ class App:
         self.vao_p_veado, self.vbo_p_veado, self.textura_p_veado, self.indices_p_veado, self.posicao_p_veado = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-veado.png", [-80, -29, 5])
         self.vao_p_panda, self.vbo_p_panda, self.textura_p_panda, self.indices_p_panda, self.posicao_p_panda = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-panda.png", [0, -28.8, 50])
         self.vao_p_tigre, self.vbo_p_tigre, self.textura_p_tigre, self.indices_p_tigre, self.posicao_p_tigre = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-tigre.png", [-10, -28.9, 140])
-        self.vao_p_girafa, self.vbo_p_girafa, self.textura_p_girafa, self.indices_p_girafa, self.posicao_p_girafa = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-girafa.png", [48, -29, 72])
+        self.vao_p_girafa, self.vbo_p_girafa, self.textura_p_girafa, self.indices_p_girafa, self.posicao_p_girafa = Obj3D.carregar_objeto("objetos/placas/placa.obj", "objetos/placas/placa-girafa.png", [45, -29, 72])
 
         #Girando placas
         rot_y = pyrr.Matrix44.from_y_rotation(1.4)
