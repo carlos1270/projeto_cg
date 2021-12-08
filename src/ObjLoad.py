@@ -15,44 +15,21 @@ class ObjLoad:
                 coordinates.append(int(d)-1)
 
 
-    @staticmethod # sorted vertex buffer for use with glDrawArrays function
+    @staticmethod # Ordena os vetores, textura e normais de acordo com as ordens da face
     def create_sorted_vertex_buffer(indices_data, vertices, textures, normals):
         for i, ind in enumerate(indices_data):
-            if i % 3 == 0: # sort the vertex coordinates
+            if i % 3 == 0: # Ordena a coordenada do vetor
                 start = ind * 3
                 end = start + 3
                 ObjLoad.buffer.extend(vertices[start:end])
-            elif i % 3 == 1: # sort the texture coordinates
+            elif i % 3 == 1: # Ordena a coordenada da textura
                 start = ind * 2
                 end = start + 2
                 ObjLoad.buffer.extend(textures[start:end])
-            elif i % 3 == 2: # sort the normal vectors
+            elif i % 3 == 2: # Ordena a coordenada do vetor normal
                 start = ind * 3
                 end = start + 3
                 ObjLoad.buffer.extend(normals[start:end])
-
-
-    @staticmethod # TODO unsorted vertex buffer for use with glDrawElements function
-    def create_unsorted_vertex_buffer(indices_data, vertices, textures, normals):
-        num_verts = len(vertices) // 3
-
-        for i1 in range(num_verts):
-            start = i1 * 3
-            end = start + 3
-            ObjLoad.buffer.extend(vertices[start:end])
-
-            for i2, data in enumerate(indices_data):
-                if i2 % 3 == 0 and data == i1:
-                    start = indices_data[i2 + 1] * 2
-                    end = start + 2
-                    ObjLoad.buffer.extend(textures[start:end])
-
-                    start = indices_data[i2 + 2] * 3
-                    end = start + 3
-                    ObjLoad.buffer.extend(normals[start:end])
-
-                    break
-
 
     @staticmethod
     def show_buffer_data(buffer):
@@ -63,13 +40,13 @@ class ObjLoad:
 
 
     @staticmethod
-    def load_model(file, sorted=True):
-        vert_coords = [] # will contain all the vertex coordinates
-        tex_coords = [] # will contain all the texture coordinates
-        norm_coords = [] # will contain all the vertex normals
+    def load_model(file):
+        vert_coords = [] # armazena as coordenadas dos vetor
+        tex_coords = [] # armazena as coordenadas dos vetores de textura
+        norm_coords = [] # armazena as coordenadas dos vetores normal
 
-        all_indices = [] # will contain all the vertex, texture and normal indices
-        indices = [] # will contain the indices for indexed drawing
+        all_indices = [] # armazena os indices de cada vetor, textura e normal
+        indices = [] # armazena os indices das faces do objeto
 
         arquive = open(file, 'r')
 
@@ -95,16 +72,14 @@ class ObjLoad:
 
         arquive.close()
         
-        if sorted:
-            # use with glDrawArrays
-            ObjLoad.create_sorted_vertex_buffer(all_indices, vert_coords, tex_coords, norm_coords)
-        else:
-            # use with glDrawElements
-            ObjLoad.create_unsorted_vertex_buffer(all_indices, vert_coords, tex_coords, norm_coords)
+        # Cria um array com os valores dos vetores ordenados por vetores, textura e normal
+        # de acordo com o que é especificado na face do objeto
+        ObjLoad.create_sorted_vertex_buffer(all_indices, vert_coords, tex_coords, norm_coords)
 
         # ObjLoader.show_buffer_data(ObjLoader.buffer)
 
-        buffer = ObjLoad.buffer.copy() # create a local copy of the buffer list, otherwise it will overwrite the static field buffer
-        ObjLoad.buffer = [] # after copy, make sure to set it back to an empty list
+        buffer = ObjLoad.buffer.copy() # Cria uma copia do array com os vetores do objeto, 
+                                       # se essa copia não fosse realizada o array estatico seria sobrescrito
+        ObjLoad.buffer = [] # Depois da copia esvazia o array da classe estatica
 
         return np.array(indices, dtype='uint32'), np.array(buffer, dtype='float32')
