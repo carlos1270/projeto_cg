@@ -1,6 +1,6 @@
 from src import Obj3D
 from src import camera
-from src import skybox
+from src import shader as sh
 from src import navegacao
 from OpenGL.GL import *
 import pyrr
@@ -17,7 +17,7 @@ class App:
         self.janela = glfw.create_window(width, height, titulo, None, None)
         # camera
         # definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
-        self.cam = camera.Camera([50.0, -26.0, 160.0], [0.0, 0.0, 0.0])
+        self.cam = camera.Camera([52.0, -22.0, 160.0], [0.0, 0.0, 0.0])
         lastX, lastY = width / 2, height / 2
         first_mouse = True
         left, right, forward, backward = False, False, False, False
@@ -54,19 +54,21 @@ class App:
         glfw.make_context_current(self.janela)
 
         # Compilando o programa de shadder auxiliar
-        shader = skybox.createShader("shaders/vertex_3d.txt", "shaders/fragment_3d.txt")
+        shader = sh.createShader("shaders/vertex_3d.txt", "shaders/fragment_3d.txt")
 
         # Adicionando o programa de shadder
         glUseProgram(shader)
         glClearColor(0, 0, 0, 1)
         glEnable(GL_DEPTH_TEST)
+        #fazer as texturas ficarem transparaente e sem fundo pra que carreguem bem
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
         # Definindo a projeção como perspectiva de acordo com o tamanho da janela
+        #ultimo parametro define o FAR, a distancia de ate onde ficara visivel 
         projecao = pyrr.matrix44.create_perspective_projection_matrix(45, width / height, 0.1, 600)
 
-        # Carregando o sky_cube
+        #Skybox do ceu
         self.vao_cube, self.vbo_cube, self.textura_cube, self.indices_cube, self.posicao_cube = Obj3D.carregar_objeto("objetos/cube/cube.obj", "objetos/cube/cube_sky.jpg", [0, 0, 0])
         
         # Carregando cenario e animais 
@@ -121,6 +123,7 @@ class App:
 
         self.scale = pyrr.Matrix44.from_scale(pyrr.Vector3([200, 200, 200]))
 
+        #pegar posicoes
         self.localizacao_modelo = glGetUniformLocation(shader, "modelo")
         self.localizacao_projecao = glGetUniformLocation(shader, "projecao")
         self.localizacao_visualizacao = glGetUniformLocation(shader, "visualizacao")
@@ -165,6 +168,7 @@ class App:
 
             self.nav.do_movement()
 
+            #limpar buffer de cores da cena
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
             view = self.cam.get_view_matrix()
@@ -212,6 +216,7 @@ class App:
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_tigre, self.textura_p_tigre, self.indices_p_tigre, self.posicao_p_tigre, GL_QUADS)
             Obj3D.exibir_objeto(self.localizacao_modelo, self.vao_p_girafa, self.textura_p_girafa, self.indices_p_girafa, self.posicao_p_girafa, GL_QUADS)
 
+            #troca entre buffer da frente e de tras
             glfw.swap_buffers(self.janela)
         #finaliza  janela
         glfw.terminate()

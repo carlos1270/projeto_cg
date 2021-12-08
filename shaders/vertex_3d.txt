@@ -4,7 +4,7 @@ layout(location = 0) in vec3 a_posicao;
 layout(location = 1) in vec2 a_textura;
 layout(location = 2) in vec3 a_normal;
 
-uniform mat4 modelo;
+uniform mat4 modelo; //combinacao de translacao e rotacao
 uniform mat4 projecao;
 uniform mat4 visualizacao;
 

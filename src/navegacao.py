@@ -33,7 +33,7 @@ class Navegacao:
             self.direita = False
 
 
-    # Função que detecta o movimento da camera
+    # Função que faz o movimento da camera
     def do_movement(self):
         if self.esquerda:
             self.cam.process_keyboard("LEFT", 0.05)
@@ -45,7 +45,7 @@ class Navegacao:
             self.cam.process_keyboard("BACKWARD", 0.05)
 
 
-    # Função de callback de captura do mouse
+    # Função de callback de captura do mouse e sincroniza com a camera para alterar o look
     def mouse_look_clb(self, window, xpos, ypos):
         if self.first_mouse:
             self.lastX = xpos
