@@ -17,7 +17,7 @@ class App:
         self.janela = glfw.create_window(width, height, titulo, None, None)
         # camera
         # definindo posição da camera, parametros: pos_do_olho, direção_da_camera, vertor_up
-        self.cam = camera.Camera([50.0, -26.0, 160.0], [0.0, 0.0, 0.0])
+        self.cam = camera.Camera([52.0, -22.0, 160.0], [0.0, 0.0, 0.0])
         lastX, lastY = width / 2, height / 2
         first_mouse = True
         left, right, forward, backward = False, False, False, False
@@ -58,7 +58,7 @@ class App:
 
         # Adicionando o programa de shadder
         glUseProgram(shader)
-        #glClearColor(0, 0, 0, 1)
+        glClearColor(0, 0, 0, 1)
         glEnable(GL_DEPTH_TEST)
         #fazer as texturas ficarem transparaente e sem fundo pra que carreguem bem
         glEnable(GL_BLEND)
