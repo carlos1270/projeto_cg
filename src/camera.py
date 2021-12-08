@@ -2,11 +2,11 @@ from pyrr import Vector3, vector, vector3, matrix44
 from math import sin, cos, radians
 
 class Camera:
-    def __init__(self):
-        self.camera_pos = Vector3([0.0, 0.0, 0.0])
-        self.camera_front = Vector3([0.0, 0.0, -1.0])
-        self.camera_up = Vector3([0.0, 1.0, 0.0])
-        self.camera_right = Vector3([1.0, 0.0, 0.0])
+    def __init__(self, camera_pos=[0.0, 0.0, 0.0], camera_front=[0.0, 0.0, 1.0], camera_up=[0.0, 1.0, 0.0], camera_right=[1.0, 0.0, 0.0]):
+        self.camera_pos = Vector3(camera_pos)
+        self.camera_front = Vector3(camera_front)
+        self.camera_up = Vector3(camera_up)
+        self.camera_right = Vector3(camera_right)
 
         self.mouse_sensitivity = 0.25
         self.jaw = -90
@@ -40,7 +40,7 @@ class Camera:
         self.camera_right = vector.normalise(vector3.cross(self.camera_front, Vector3([0.0, 1.0, 0.0])))
         self.camera_up = vector.normalise(vector3.cross(self.camera_right, self.camera_front))
 
-    # Camera method for the WASD movement
+    # Metodo que é chamado para processar o movimento da camera
     def process_keyboard(self, direction, velocity):
         if direction == "FORWARD":
             self.camera_pos += self.camera_front * (velocity*2)

@@ -11,7 +11,7 @@ class Navegacao:
         self.lastX = lastX
         self.lastY = lastY
 
-    # the keyboard input callback
+    # Função de callback de captura do teclado
     def key_input_clb(self, window, key, scancode, action, mode):
         if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
             glfw.set_window_should_close(window, True)
@@ -31,11 +31,9 @@ class Navegacao:
             self.direita = True
         elif key == glfw.KEY_D and action == glfw.RELEASE:
             self.direita = False
-        # if key in [glfw.KEY_W, glfw.KEY_S, glfw.KEY_D, glfw.KEY_A] and action == glfw.RELEASE:
-        #     left, right, forward, backward = False, False, False, False
 
 
-    # do the movement, call this function in the main loop
+    # Função que detecta o movimento da camera
     def do_movement(self):
         if self.esquerda:
             self.cam.process_keyboard("LEFT", 0.05)
@@ -47,7 +45,7 @@ class Navegacao:
             self.cam.process_keyboard("BACKWARD", 0.05)
 
 
-    # the mouse position callback function
+    # Função de callback de captura do mouse
     def mouse_look_clb(self, window, xpos, ypos):
         if self.first_mouse:
             self.lastX = xpos
